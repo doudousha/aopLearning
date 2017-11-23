@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="greetingAdvice" class="com.aop.learning.GreettingBeforeAdvice"></bean>
+    <bean id="greetingAfter" class="com.aop.learning.GreetingAfterAdvice"></bean>
+    <bean id="target" class="com.aop.learning.NaiveWaiter"></bean>
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.aop.learning.Waiter"
+          p:interceptorNames="grettingAdvice,greetingAfter"
+          p:target-ref="target"></bean>
+
+</beans>

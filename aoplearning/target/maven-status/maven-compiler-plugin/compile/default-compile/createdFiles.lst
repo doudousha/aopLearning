@@ -1,0 +1,5 @@
+simpleaspect\TracingAspect.class
+com\aop\learning\NaiveWaiter.class
+configuration\SimpleAspectConfiguration.class
+simpleaspect\SimpleService.class
+com\aop\learning\Waiter.class

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <beans>
+        <bean id="audience"
+              class="com.spring.audience.Audience"/>
+
+        <bean id="perform" class="com.spring.Performer"></bean>
+
+        <bean id="magician" class="com.spring.Magician"></bean>
+
+        <bean id="volunteer" class="com.spring.Volunteer"></bean>
+
+        <aop:config>
+            <aop:aspect ref="audience">
+                <aop:pointcut id="audiencePointcut"
+                              expression="execution(* com.spring.Performer.perform(..))"></aop:pointcut>
+                <aop:before method="takeSeats" pointcut="execution(* com.spring.Performer.perform(..))"></aop:before>
+                <aop:before method="turnOffCellPhones"
+                            pointcut="execution(* com.spring.Performer.perform(..))"></aop:before>
+
+                <aop:after-returning method="applaud"
+                                     pointcut="execution(* com.spring.Performer.perform(..))"></aop:after-returning>
+                <aop:after-throwing method="demandRefund"
+                                    pointcut="execution(* com.spring.Performer.perform(..))"></aop:after-throwing>
+
+                <aop:around method="watcherPerformance" pointcut-ref="audiencePointcut"></aop:around>
+            </aop:aspect>
+
+            <aop:aspect ref="magician">
+                <aop:pointcut id="thinking"
+                              expression="execution(* com.spring.Thinker.thinkOfSomething(String)) and args(thoughts)"></aop:pointcut>
+
+                <aop:before method="interceptThoughts" pointcut-ref="thinking" arg-names="thoughts"></aop:before>
+            </aop:aspect>
+
+        </aop:config>
+    </beans>
+
+</beans>
